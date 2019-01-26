@@ -62,10 +62,10 @@ var viewVar = function(type){
          .enter()
          .append("line")
          .attr("x1", function(d,i) {
-            return xScale(i);
+           return radiusCircles/2 +  xScale(i);
          })
          .attr("x2", function(d,i) {
-            return xScale(i);
+           return radiusCircles/2 +  xScale(i);
          })
          .attr("y1", function(d){
            return height - yScale(d[type]);
@@ -87,28 +87,32 @@ var viewVar = function(type){
          .attr("cy", function(d) {
            return height +radiusCircles + - yScale(d[type]);
          })
-         .attr("r", radiusCircles);
-
+         .attr("r", radiusCircles)
+         .on("click", function(d) {
+            console.log("on click" + d.Name);
+          })
+          .on("mouseover", handleMouseOver)
+          .on("mouseout", handleMouseOut);
 
 
     // Create labels
-    svg.selectAll("text")
-       .data(dataset)
-       .enter()
-       .append("text")
-       .text(function(d) {
-          return d[type];
-       })
-       .attr("text-anchor", "middle")
-       .attr("x", function(d, i) {
-          return xScale(i) + xScale.bandwidth() / 2;
-       })
-       .attr("y", function(d) {
-          return height - yScale(d[type]) + 14;
-       })
-       .attr("font-family", "sans-serif")
-       .attr("font-size", "11px")
-       .attr("fill", "white");
+    // svg.selectAll("text")
+    //    .data(dataset)
+    //    .enter()
+    //    .append("text")
+    //    .text(function(d) {
+    //       return d[type];
+    //    })
+    //    .attr("text-anchor", "middle")
+    //    .attr("x", function(d, i) {
+    //       return xScale(i) + xScale.bandwidth() / 2;
+    //    })
+    //    .attr("y", function(d) {
+    //       return height - yScale(d[type]) + 14;
+    //    })
+    //    .attr("font-family", "sans-serif")
+    //    .attr("font-size", "11px")
+    //    .attr("fill", "white");
 
 }
 
@@ -139,10 +143,10 @@ var update = function(type){
      })
      .duration(500)
      .attr("x1", function(d,i) {
-        return xScale(i);
+       return radiusCircles/2 +  xScale(i);
      })
      .attr("x2", function(d,i) {
-        return xScale(i);
+       return radiusCircles/2 +  xScale(i);
      })
      .attr("y1", function(d){
        return   height -yScale(d[type]);
@@ -175,27 +179,52 @@ var update = function(type){
   //    });
 
   // Create labels
-  svg.selectAll("text")
-     .data(dataset)
-     .transition()
-	   .delay(function(d, i) {
-		   return i / dataset.length * 1000;
-	   })
-	   .duration(500)
-     .text(function(d) {
-        return d[type];
-     })
-     .attr("text-anchor", "middle")
-     .attr("x", function(d, i) {
-        return xScale(i) + xScale.bandwidth() / 2;
-     })
-     .attr("y", function(d) {
-        return height - yScale(d[type]) + 14;
-     })
-     .attr("font-family", "sans-serif")
-     .attr("font-size", "11px")
-     .attr("fill", "white");
+  // svg.selectAll("text")
+  //    .data(dataset)
+  //    .transition()
+	//    .delay(function(d, i) {
+	// 	   return i / dataset.length * 1000;
+	//    })
+	//    .duration(500)
+  //    .text(function(d) {
+  //       return d[type];
+  //    })
+  //    .attr("text-anchor", "middle")
+  //    .attr("x", function(d, i) {
+  //       return xScale(i) + xScale.bandwidth() / 2;
+  //    })
+  //    .attr("y", function(d) {
+  //       return height - yScale(d[type]) + 14;
+  //    })
+  //    .attr("font-family", "sans-serif")
+  //    .attr("font-size", "11px")
+  //    .attr("fill", "white");
 
+}
+
+// Create Event Handlers for mouse
+function handleMouseOver(d, i) {  // Add interactivity
+    // Use D3 to select element, change color and size
+    d3.select(this)
+      .transition()
+      .delay(function(d, i) {
+        return i / dataset.length * 1000;
+      })
+      .duration(250)
+      .attr("fill", "orange")
+      .attr("r", radiusCircles*2);
+}
+// Create Event Handlers for mouse
+function handleMouseOut(d, i) {  // Add interactivity
+    // Use D3 to select element, change color and size
+    d3.select(this)
+      .transition()
+      .delay(function(d, i) {
+        return i / dataset.length * 1000;
+      })
+      .duration(250)
+      .attr("fill", "black")
+      .attr("r", radiusCircles);
 }
 
 d3.selectAll(".block-info")
