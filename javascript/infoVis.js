@@ -7,6 +7,7 @@ var dataset;
 var xScale;
 var yScale;
 
+var radiusCircles = 8;
 // LOAD JSON
 d3.json("../data/visInfo.json", function(data) {
     dataset = data;
@@ -26,16 +27,35 @@ var initialize = function(){
   //Create barss
    xScale = d3.scaleBand()
               .domain(d3.range(dataset.length))
-              .rangeRound([0, width])
+              .rangeRound([radiusCircles/2, width])
               .paddingInner(0.05);
 
    yScale = d3.scaleLinear()
           .domain([0, 10])
-          .range([0, height]);
+          .range([0, height-radiusCircles]);
 }
 
 // Load de information from a specific field
 var viewVar = function(type){
+
+  // svg.selectAll("rect")
+  //    .data(dataset)
+  //    .enter()
+  //    .append("rect")
+  //    .attr("x", function(d, i) {
+  //       return xScale(i);
+  //    })
+  //    .attr("y", function(d) {
+  //       return height - yScale(d[type]);
+  //    })
+  //    .attr("width", xScale.bandwidth())
+  //    .attr("height", function(d) {
+  //       return yScale(d[type]);
+  //    })
+  //    .attr("fill", function(d) {
+  //     return "rgba(0, 0, " + Math.round(d[type] * 100) +"0.1"+ ")";
+  //    });
+
   //Generate guide lines
       svg.selectAll("line")
          .data(dataset)
@@ -48,10 +68,10 @@ var viewVar = function(type){
             return xScale(i);
          })
          .attr("y1", function(d){
-           return  height - yScale(d[type]);
+           return height - yScale(d[type]);
          })
          .attr("y2", function(d) {
-            return yScale(d[type]);
+            return height;
          })
          .attr("stroke", "#ddd")
          .attr("stroke-width", 1);
@@ -62,30 +82,14 @@ var viewVar = function(type){
          .enter()
          .append("circle")
          .attr("cx", function(d, i) {
-            return  xScale(i);
+            return radiusCircles/2 +  xScale(i);
          })
          .attr("cy", function(d) {
-            return yScale(d[type]);
+           return height +radiusCircles + - yScale(d[type]);
          })
-         .attr("r", 5);
+         .attr("r", radiusCircles);
 
-    // svg.selectAll("rect")
-    //    .data(dataset)
-    //    .enter()
-    //    .append("rect")
-    //    .attr("x", function(d, i) {
-    //       return xScale(i);
-    //    })
-    //    .attr("y", function(d) {
-    //       return height - yScale(d[type]);
-    //    })
-    //    .attr("width", xScale.bandwidth())
-    //    .attr("height", function(d) {
-    //       return yScale(d[type]);
-    //    })
-    //    .attr("fill", function(d) {
-    //     return "rgb(0, 0, " + Math.round(d[type] * 100) + ")";
-    //    });
+
 
     // Create labels
     svg.selectAll("text")
@@ -120,12 +124,12 @@ var update = function(type){
       })
       .duration(500)
       .attr("cx", function(d, i) {
-        return  xScale(i);
+        return  radiusCircles/2 + xScale(i);
       })
       .attr("cy", function(d) {
-        return yScale(d[type]);
+        return height +radiusCircles + - yScale(d[type]);
       })
-      .attr("r", 5);
+      .attr("r", radiusCircles);
 
   svg.selectAll("line")
       .data(dataset)
@@ -141,10 +145,10 @@ var update = function(type){
         return xScale(i);
      })
      .attr("y1", function(d){
-       return  height - yScale(d[type]);
+       return   height -yScale(d[type]);
      })
      .attr("y2", function(d) {
-        return yScale(d[type]);
+        return height;
      })
      .attr("stroke", "#ddd")
      .attr("stroke-width", 1);
@@ -167,7 +171,7 @@ var update = function(type){
   //       return yScale(d[type]);
   //    })
   //    .attr("fill", function(d) {
-  //     return "rgb(0, 0, " + Math.round(d[type] * 100) + ")";
+  //     return "rgba(0, 0, " + Math.round(d[type] * 100) +"0.1"+ ")";
   //    });
 
   // Create labels
