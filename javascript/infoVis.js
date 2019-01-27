@@ -1,7 +1,7 @@
 
 // VARIABLES
 var width = 800;
-var height = 600;
+var height = 400;
 
 var dataset;
 var xScale;
@@ -92,7 +92,8 @@ var viewVar = function(type){
             console.log("on click" + d.Name);
           })
           .on("mouseover", handleMouseOver)
-          .on("mouseout", handleMouseOut);
+          .on("mouseout", handleMouseOut)
+          .on("click", showUser);
 
 
     // Create labels
@@ -200,6 +201,17 @@ var update = function(type){
   //    .attr("font-size", "11px")
   //    .attr("fill", "white");
 
+}
+
+
+// show modal with user information
+function showUser(d){
+  $('#userInfo').modal('show');
+  document.getElementById('userName').innerHTML= d.Name;
+  document.getElementById('userMajor').innerHTML = d.Major + " / " + d.Future_Degree ;
+  document.getElementById("p2").innerHTML = d.About;
+  document.getElementById("p1").innerHTML = d.Expectations;
+  changeUserInfo(d);
 }
 
 // Create Event Handlers for mouse
