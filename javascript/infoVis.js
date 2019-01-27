@@ -1,19 +1,22 @@
 
 // VARIABLES
-var width = 800;
+var width = 700;
 var height = 400;
 
 var dataset;
 var xScale;
 var yScale;
-
 var radiusCircles = 8;
+
+// var groupChart;
 // LOAD JSON
 d3.json("../data/visInfo.json", function(data) {
     dataset = data;
     initialize();
     intiateRadialGraph(data[51]);
     viewVar("Programming");
+    // groupChart=  RadarChart.draw("#group-skills", "../data/avenger.csv");
+
 });
 
 

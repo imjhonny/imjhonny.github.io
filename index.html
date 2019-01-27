@@ -16,48 +16,65 @@
     <title>Information Visualization</title>
   </head>
   <body>
-    <h1>Student Group Fromation</h1>
+    <div class="container">
+      <div class="row">
+        <div class="header col-xs-12">
+          <h1>Student Group Fromation</h1>
+        </div>
+        <div class="col-xs-3">
+          <div class="group-info">
+            <h3>Group members:</h3>
+            <ul id="group-members"class="">
+              <!-- <li id="member">name</li> -->
+            </ul>
+          </div>
+          <h3>Student Skills</h3>
+          <div id="Information_Visualization" class="block-info">
+            Information_Visualization
+          </div>
+          <div id="Mathematics" class="block-info">
+            Mathematics
+          </div>
+          <div id="Statistics" class="block-info">
+            Statistics
+          </div>
+          <div id="Drawing_and_Art" class="block-info">
+            Drawing_and_Art
+          </div>
+          <div id="Computer_Graphics_Programming" class="block-info">
+            Computer_Graphics_Programming
+          </div>
 
-    <div id="Information_Visualization" class="block-info">
-      Information_Visualization
-    </div>
-    <div id="Statistics" class="block-info">
-      Statistics
-    </div>
-    <div id="Mathematics" class="block-info">
-      Mathematics
-    </div>
-    <div id="Drawing_and_Art" class="block-info">
-      Drawing_and_Art
-    </div>
-    <div id="Computer_usage" class="block-info">
-      Computer_usage
-    </div>
-    <div id="Programming" class="block-info">
-      Programming
-    </div>
-    <div id="Computer_Graphics_Programming" class="block-info">
-      Computer_Graphics_Programming
-    </div>
-    <div id="HCI_Programming" class="block-info">
-      HCI_Programming
-    </div>
-    <div id="Experience_Evaluation" class="block-info">
-      Experience_Evaluation
-    </div>
-    <div id="Communication" class="block-info">
-      Communication
-    </div>
-    <div id="Collaboration" class="block-info">
-      Collaboration
-    </div>
-    <div id="Code_repository" class="block-info">
-      Code_repository
-    </div>
+          <div id="Programming" class="block-info">
+            Programming
+          </div>
+          <div id="Code_repository" class="block-info">
+            Code_repository
+          </div>
+          <div id="Experience_Evaluation" class="block-info">
+            Experience_Evaluation
+          </div>
+          <div id="HCI_Programming" class="block-info">
+            HCI_Programming
+          </div>
+          <div id="Computer_usage" class="block-info">
+            Computer_usage
+          </div>
+          <div id="Communication" class="block-info">
+            Communication
+          </div>
+          <div id="Collaboration" class="block-info">
+            Collaboration
+          </div>
+        </div>
 
+        <div class="col-xs-9">
+          <h4>Students:</h4>
+          <div id="bar-container">
+          </div>
+        </div>
 
-    <div id="bar-container">
-
+      </div>
     </div>
 
     <!-- Modal -->
@@ -65,9 +82,15 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title" id="userName">Modal title</h4>
-            <h6 class="user-major" id="userMajor">Modal title</h6>
+            <div class="col-xs-6">
+              <h4 class="modal-title" id="userName">Modal title</h4>
+              <h6 class="user-major" id="userMajor">Modal title</h6>
+            </div>
+            <div class="col-xs-6">
+              <button type="button" class="btn btn-default btn-lg pull-right">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add to group
+              </button>
+            </div>
 
           </div>
           <div id="userGraph" class="modal-body">
@@ -88,6 +111,7 @@
     <!-- Bootstrap JavaScript, needed if you want for instance tabs, models, popovers etc. -->
     <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
     <!--Project Javascript JavaScript  -->
+    <!-- <script type="text/javascript" src="javascript/radarChart.js"></script> -->
     <script type="text/javascript" src="javascript/infoVis.js"></script>
     <script type="text/javascript" src="javascript/radialChart.js"></script>
 

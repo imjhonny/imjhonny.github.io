@@ -40,3 +40,7 @@ path.arc:hover {
   color: white;
   padding: 6px;
 }
+
+.block-info{
+  display: block;
+}
