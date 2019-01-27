@@ -22,8 +22,18 @@ const PI = Math.PI,
   labelPadding = -5,
   numTicks = 6;
 
-function changeUserInfo (data){
-  var dataRadial = [];
+var numArcs = 0;
+var arcWidth = 0;
+var arc;
+var radialAxis;
+var scale;
+var ticks;
+var keys;
+var axialAxis;
+var arcs;
+
+function intiateRadialGraph(data){
+  let dataRadial = [];
   addValue(data, dataRadial, 'Information_Visualization');
   addValue(data, dataRadial, 'Statistics');
   addValue(data, dataRadial, 'Mathematics');
@@ -38,31 +48,31 @@ function changeUserInfo (data){
   addValue(data, dataRadial, 'Collaboration');
 
 
-  let scale = d3.scaleLinear()
+  scale = d3.scaleLinear()
     .domain([0, d3.max(dataRadial, d => d.value) * 1.1])
-    .range([0, 2 * PI]);
+    .range([0, (2 * PI)-(PI/2)] );
 
-  let ticks = scale.ticks(numTicks).slice(0, -1);
-  let keys = Object.keys(dataRadial);
+  ticks = scale.ticks(numTicks);
+  keys = Object.keys(dataRadial);
   //number of arcs
-  const numArcs = keys.length;
-  const arcWidth = (chartRadius - arcMinRadius - numArcs * arcPadding) / numArcs;
+  numArcs = keys.length;
+  arcWidth = (chartRadius - arcMinRadius - numArcs * arcPadding) / numArcs;
 
-  let arc = d3.arc()
+  arc = d3.arc()
     .innerRadius((d, i) => getInnerRadius(i))
     .outerRadius((d, i) => getOuterRadius(i))
     .startAngle(0)
     .endAngle((d, i) => scale(d))
 
-  let radialAxis = svgRad.append('g')
+  radialAxis = svgRad.append('g')
     .attr('class', 'r axis')
     .selectAll('g')
       .data(dataRadial)
       .enter().append('g');
 
-  radialAxis.append('circle')
-    .data(dataRadial)
-    .attr('r', (d, i) => getOuterRadius(i) + arcPadding);
+  // radialAxis.append('circle')
+  //   .data(dataRadial)
+  //   .attr('r', (d, i) => getOuterRadius(i) + arcPadding);
 
   radialAxis.append('text')
     .data(dataRadial)
@@ -70,7 +80,7 @@ function changeUserInfo (data){
     .attr('y', (d, i) => -getOuterRadius(i) + arcPadding)
     .text(d => d.name);
 
-  let axialAxis = svgRad.append('g')
+  axialAxis = svgRad.append('g')
     .attr('class', 'a axis')
     .selectAll('g')
       .data(ticks)
@@ -87,7 +97,7 @@ function changeUserInfo (data){
     .text(d => d);
 
   //data arcs
-  let arcs = svgRad.append('g')
+  arcs = svgRad.append('g')
     .attr('class', 'data')
     .selectAll('path')
       .data(dataRadial)
@@ -97,40 +107,64 @@ function changeUserInfo (data){
 
   arcs.transition()
     .delay((d, i) => i * 200)
-    .duration(1000)
+    .duration(10)
     .attrTween('d', arcTween);
 
-  arcs.on('mousemove', showTooltip)
-  arcs.on('mouseout', hideTooltip)
+  arcs.on('mousemove', showTooltip);
+  arcs.on('mouseout', hideTooltip);
+
+}
 
 
-  function arcTween(d, i) {
-    let interpolate = d3.interpolate(0, d.value);
-    return t => arc(interpolate(t), i);
-  }
+function changeUserInfo (data){
+  let dataRadial = [];
+  addValue(data, dataRadial, 'Information_Visualization');
+  addValue(data, dataRadial, 'Statistics');
+  addValue(data, dataRadial, 'Mathematics');
+  addValue(data, dataRadial, 'Drawing_and_Art');
+  addValue(data, dataRadial, 'Computer_usage');
+  addValue(data, dataRadial, 'Programming');
+  addValue(data, dataRadial, 'Code_repository');
+  addValue(data, dataRadial, 'Computer_Graphics_Programming');
+  addValue(data, dataRadial, 'HCI_Programming');
+  addValue(data, dataRadial, 'Experience_Evaluation');
+  addValue(data, dataRadial, 'Communication');
+  addValue(data, dataRadial, 'Collaboration');
 
-  function showTooltip(d) {
-    tooltip.style('left', (d3.event.pageX + 10) + 'px')
-      .style('top', (d3.event.pageY - 25) + 'px')
-      .style('display', 'inline-block')
-      .html(d.value);
-  }
+  arcs.data(dataRadial)
+    .transition()
+      .delay((d, i) => i * 10)
+      .duration(0)
+      .attrTween('d', arcTween);
 
-  function hideTooltip() {
-    tooltip.style('display', 'none');
-  }
+}
 
-  function rad2deg(angle) {
-    return angle * 180 / PI;
-  }
+function arcTween(d, i) {
+  let interpolate = d3.interpolate(0, d.value);
+  return t => arc(interpolate(t), i);
+}
 
-  function getInnerRadius(index) {
-    return arcMinRadius + (numArcs - (index + 1)) * (arcWidth + arcPadding);
-  }
+function showTooltip(d) {
+  tooltip.style('left', (d3.event.pageX + 10) + 'px')
+    .style('top', (d3.event.pageY - 25) + 'px')
+    .style('display', 'inline-block')
+    .html(d.value);
+}
 
-  function getOuterRadius(index) {
-    return getInnerRadius(index) + arcWidth;
-  }
+function hideTooltip() {
+  tooltip.style('display', 'none');
+}
+
+function rad2deg(angle) {
+  return angle * 180 / PI;
+}
+
+function getInnerRadius(index) {
+  return arcMinRadius + (numArcs - (index + 1)) * (arcWidth + arcPadding);
+}
+
+function getOuterRadius(index) {
+  return getInnerRadius(index) + arcWidth;
 }
 
 function removeA(arr) {

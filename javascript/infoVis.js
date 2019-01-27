@@ -12,6 +12,7 @@ var radiusCircles = 8;
 d3.json("../data/visInfo.json", function(data) {
     dataset = data;
     initialize();
+    intiateRadialGraph(data[51]);
     viewVar("Programming");
 });
 
