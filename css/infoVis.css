@@ -1,4 +1,9 @@
-
+h3{
+    border-bottom: solid 2px;
+}
+h1{
+    font-weight: 600;
+}
 
 
 .block-info{
@@ -44,3 +49,48 @@ path.arc:hover {
 .block-info{
   display: block;
 }
+
+.header h1,.author{
+  display: inline-block;
+}
+
+.header{
+  border-bottom: solid 4px;
+}
+
+.graph-container{
+      padding-top: 17px;
+}
+.graph-container h4{
+  border-bottom: solid 2px;
+}
+
+.author{
+    margin-top: 40px;
+}
+
+.modal-header{
+  border: none;
+}
+.modal-header h4{
+  font-weight: 600;
+}
+.modal-header h6{
+  margin-top: 0;
+}
+.modal-body h4{
+    margin-top: 40px;
+    font-weight: 600;
+}
+#group-members{
+  min-height: 120px;
+}
+
+span.square {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    background: black;
+    border-radius: 20px;
+    margin-right: 5px;
+  }

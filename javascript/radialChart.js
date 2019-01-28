@@ -4,7 +4,7 @@ const widthRad = 500,
 
 var values= [0,2,4,6,8,10];
 
-const color = d3.scaleOrdinal(d3.schemeCategory10);
+
 
 
 let svgRad = d3.select('#userGraph').append('svg')
@@ -46,6 +46,7 @@ function intiateRadialGraph(data){
   addValue(data, dataRadial, 'Experience_Evaluation');
   addValue(data, dataRadial, 'Communication');
   addValue(data, dataRadial, 'Collaboration');
+
 
 
   scale = d3.scaleLinear()
@@ -103,7 +104,12 @@ function intiateRadialGraph(data){
       .data(dataRadial)
       .enter().append('path')
       .attr('class', 'arc')
-      .style('fill', (d, i) => color(i))
+      .style('fill', function(d,i){
+        let tag =  document.getElementById(d.name).getElementsByClassName("square");
+        tag[0].style.backgroundColor  = color(i);
+        return color(i);
+      });
+
 
   arcs.transition()
     .delay((d, i) => i * 200)
@@ -183,4 +189,26 @@ function addValue(arrO, arrN, key){
   info['name']= key ;
   info['value']=arrO[key];
   arrN.push(info)
+}
+
+function rgbToHex(color) {
+    color = ""+ color;
+    if (!color || color.indexOf("rgb") < 0) {
+        return;
+    }
+
+    if (color.charAt(0) == "#") {
+        return color;
+    }
+
+    var nums = /(.*?)rgb\((\d+),\s*(\d+),\s*(\d+)\)/i.exec(color),
+        r = parseInt(nums[2], 10).toString(16),
+        g = parseInt(nums[3], 10).toString(16),
+        b = parseInt(nums[4], 10).toString(16);
+
+    return "#"+ (
+        (r.length == 1 ? "0"+ r : r) +
+        (g.length == 1 ? "0"+ g : g) +
+        (b.length == 1 ? "0"+ b : b)
+    );
 }

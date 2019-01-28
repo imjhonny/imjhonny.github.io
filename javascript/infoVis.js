@@ -1,12 +1,21 @@
 
 // VARIABLES
 var width = 700;
-var height = 400;
+var height = 450;
 
 var dataset;
 var xScale;
 var yScale;
+var yAxis;
 var radiusCircles = 8;
+
+var currentColor;
+
+var color = d3.scaleOrdinal(d3.schemeCategory10);
+
+
+var btn = document.getElementById("addMemberBtn");
+btn.addEventListener("click", addGroupMemeber);
 
 // var groupChart;
 // LOAD JSON
@@ -14,7 +23,7 @@ d3.json("../data/visInfo.json", function(data) {
     dataset = data;
     initialize();
     intiateRadialGraph(data[51]);
-    viewVar("Programming");
+    viewVar("Information_Visualization");
     // groupChart=  RadarChart.draw("#group-skills", "../data/avenger.csv");
 
 });
@@ -31,16 +40,27 @@ var initialize = function(){
   //Create barss
    xScale = d3.scaleBand()
               .domain(d3.range(dataset.length))
-              .rangeRound([radiusCircles/2, width])
+              .rangeRound([radiusCircles/2, width-13])
               .paddingInner(0.05);
 
    yScale = d3.scaleLinear()
           .domain([0, 10])
           .range([0, height-radiusCircles]);
+
+  var yScaleAxis = d3.scaleLinear()
+         .domain([0, 10])
+         .range([height-radiusCircles , radiusCircles+(radiusCircles/2)]);
+
+  //Define Y axis
+	yAxis = d3.axisLeft()
+					  .scale(yScaleAxis)
+					  .ticks(3);
 }
 
 // Load de information from a specific field
 var viewVar = function(type){
+
+  currentColor = rgbToHex($('#'+type+"_span").css("background-color"));
 
   // svg.selectAll("rect")
   //    .data(dataset)
@@ -91,6 +111,9 @@ var viewVar = function(type){
          .attr("cy", function(d) {
            return height +radiusCircles + - yScale(d[type]);
          })
+         .style('fill', function(d,i){
+           return currentColor;
+         })
          .attr("r", radiusCircles)
          .on("click", function(d) {
             console.log("on click" + d.Name);
@@ -98,6 +121,12 @@ var viewVar = function(type){
           .on("mouseover", handleMouseOver)
           .on("mouseout", handleMouseOut)
           .on("click", showUser);
+
+          //Create Y axis
+  			svg.append("g")
+  				.attr("class", "axis")
+  				.attr("transform", "translate(" + (width-10)  + ",0)")
+  				.call(yAxis);
 
 
     // Create labels
@@ -123,6 +152,7 @@ var viewVar = function(type){
 
 // update the information for a new one
 var update = function(type){
+  currentColor = $('#'+type+"_span").css("background-color");
 
   //Generate circles last, so they appear in front
   svg.selectAll("circle")
@@ -132,6 +162,10 @@ var update = function(type){
         return i / dataset.length * 1000;
       })
       .duration(500)
+      .style('fill', function(d,i){
+
+        return currentColor;
+      })
       .attr("cx", function(d, i) {
         return  radiusCircles/2 + xScale(i);
       })
@@ -254,3 +288,16 @@ d3.select("h1")
       update("Information_Visualization");
 
 });
+
+function addGroupMemeber() {
+  $('#userInfo').modal('hide');
+  var userName =  document.getElementById("userName").innerHTML;
+  var userInfo =/* template */`
+       <li id="member">${userName}</li>
+  `;
+  var ul = document.getElementById("group-members");
+  var li = document.createElement("li");
+  li.appendChild(document.createTextNode(userName));
+  // li.setAttribute("id", "element4");
+  ul.appendChild(li);
+}
