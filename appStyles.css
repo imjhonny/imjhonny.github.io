@@ -1,0 +1,82 @@
+
+/* general styles */
+body{
+  background-color: #323647;
+  color: white;
+}
+
+a{
+  color: white;
+}
+
+a:hover{
+  color: white;
+}
+
+hr{
+  border-top: 1px solid rgba(255,255,255, 0.4);
+}
+
+.text-center{
+  text-align: center;
+}
+
+.text-center img{
+   opacity: 0.8;
+}
+.menu h1{
+  display: inline;
+}
+.menu h8{
+  display: inline-block;
+}
+
+.active-menu{
+  text-decoration: underline;
+}
+#map-container{
+  position: relative;
+  width: 500;
+  height: 450px;
+}
+.hoverinfo {
+  padding: 4px;
+  border-radius: 1px;
+  box-shadow: none !important;
+  font-size: 14px;
+  border: 1px solid #CFCECE;
+  color: #323647;
+  background-color: #F0DF0C;
+}
+
+.hoverinfo hr {
+  border:1px dotted #CFCECE;
+}
+
+.dropdown{
+  display: inline;
+}
+
+.val-selected{
+  display: inline-block;
+}
+
+.country-viz{
+  border: solid 1px white;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.country-viz .close{
+  color: white;
+  text-shadow: none;
+  opacity: 1;
+}
+
+.uppperSpaceMin{
+  padding-top: 10px;
+}
+.legend dt{
+  font-size: 12px;
+  text-align: right;
+}

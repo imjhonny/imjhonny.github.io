@@ -2,129 +2,71 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <!--CSS  -->
-    <link rel="stylesheet" href="css/infoVis.css">
-    <!--D3 JS JavaScript  -->
-    <script type="text/javascript" src="javascript/d3.js"></script>
-
-
-    <title>Information Visualization</title>
+    <!-- load D3, topojason and world map -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/topojson/1.6.9/topojson.min.js"></script>
+    <script src="/datamaps.world.min.js"></script>
+    <!--BOOTSTRAP -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- Load styles  -->
+    <link rel="stylesheet" type="text/css" href="appStyles.css" />
+    <title>World Visualization</title>
   </head>
   <body>
-    <div class="container">
-      <div class="row">
-        <div class="header col-xs-12">
-          <h1>Student group formation</h1>
-          <div class="author pull-right">
-            By:Jonathan Ramirez M.
+    <div class="container-fluid">
+      <div id="menu" class=""></div>
+    <div id="main-content" class="row ">
+        <div class="col-sm-7">
+          <div id="map-container" class="col-sm-12"></div>
+          <div class="legend col-sm-12">
+            <dl class ="row">
+              <dt class="col-sm-3">Veryimportant: </dt><dd class="col-sm-1" style="background-color:rgba(240,223,12,1)">&nbsp;</dd>
+              <dt class="col-sm-3">Ratherimportant: </dt><dd class="col-sm-1" style="background-color:rgba(240,223,12,0.3)">&nbsp;</dd>
+              <dt class="col-sm-3">Notveryimportant: </dt><dd class="col-sm-1" style="background-color:rgba(232,88,93,0.3)">&nbsp;</dd>
+              <dt class="col-sm-3">Notatallimportant: </dt><dd class="col-sm-1" style="background-color:rgba(232,88,93,1)">&nbsp;</dd>
+              <dt class="col-sm-3">Noanswer: </dt><dd class="col-sm-1" style="background-color:rgba(255,255,255,0.5)">&nbsp;</dd>
+            </dl>
           </div>
+          <div id ="datesContainer" class="col-sm-12"></div>
         </div>
-        <div class="col-xs-3">
-          <div class="group-info">
-            <h3>Group members</h3>
-            <ul id="group-members"class="">
-              <!-- <li id="member">name</li> -->
-
-            </ul>
-          </div>
-          <h3>Student Skills</h3>
-          <div id="Information_Visualization" class="block-info">
-            <span id="Information_Visualization_span" class="square"></span>Information_Visualization
-          </div>
-          <div id="Statistics" class="block-info">
-            <span id="Statistics_span" class="square"></span>Statistics
-          </div>
-          <div id="Mathematics" class="block-info">
-            <span id="Mathematics_span"class="square"></span>Mathematics
-          </div>
-          <div id="Drawing_and_Art" class="block-info">
-            <span id="Drawing_and_Art_span" class="square"></span>Drawing_and_Art
-          </div>
-          <div id="Computer_usage" class="block-info">
-            <span id="Computer_usage_span" class="square"></span>Computer_usage
-          </div>
-          <div id="Programming" class="block-info">
-            <span id="Programming_span" class="square"></span>Programming
-          </div>
-          <div id="Code_repository" class="block-info">
-            <span id="Code_repository_span" class="square"></span>Code_repository
-          </div>
-          <div id="Computer_Graphics_Programming" class="block-info">
-            <span id="Computer_Graphics_Programming_span" class="square"></span>Computer Graphics Programming
-          </div>
-          <div id="HCI_Programming" class="block-info">
-            <span id="HCI_Programming_span" class="square"></span>HCI_Programming
-          </div>
-
-          <div id="Experience_Evaluation" class="block-info">
-            <span id="Experience_Evaluation_span" class="square"></span>Experience_Evaluation
-          </div>
-          <div id="Communication" class="block-info">
-            <span id="Communication_span" class="square"></span>Communication
-          </div>
-          <div id="Collaboration" class="block-info">
-            <span id="Collaboration_span" class="square"></span>Collaboration
-          </div>
-        </div>
-
-        <div class="col-xs-9 graph-container">
-          <h4>Students:</h4>
-          <div id="bar-container">
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- Modal -->
-    <div class="modal fade" id="userInfo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-      <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <div class="col-xs-6">
-              <h4 class="modal-title" id="userName">Modal title</h4>
-              <h6 class="user-major" id="userMajor">Modal title</h6>
-            </div>
-            <div class="col-xs-6">
-
-              <a href="#" id="addMemberBtn" class=" pull-right">
-                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add to group
-              </div>
-            </a>
-
-          </div>
-          <div id="" class="modal-body">
-            <div class="col-xs-7">
-              <div id="userGraph">
-
-              </div>
-            </div>
-            <div class="col-xs-5">
-              <h4>Interests:</h4>
-              <p id="p2">Hello World!</p>
-              <h4>Expectations:</h4>
-              <p id="p1">Hello World!</p>
-            </div>
-          </div>
-          <div class="modal-footer">
-
-          </div>
+        <div class="col-sm-5">
+          <div id="dropDownValues" class="col-sm-12"></div>
+          <div id="countriesViz" class="col-sm-12"></div>
         </div>
       </div>
     </div>
 
-    <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>    <!--Project Javascript JavaScript  -->
-    <!-- Bootstrap JavaScript, needed if you want for instance tabs, models, popovers etc. -->
-    <!-- <script type="text/javascript" src="javascript/radarChart.js"></script> -->
-    <script type="text/javascript" src="javascript/infoVis.js"></script>
-    <script type="text/javascript" src="javascript/radialChart.js"></script>
 
   </body>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+  <!--MODEL  -->
+  <script src="js/model/worldViz.js"></script>
+  <!-- CONTROLLERS -->
+  <script src="js/controller/explorationController.js"> </script>
+  <script src="js/controller/MenuViewController.js"> </script>
+  <script src="js/controller/mapViewController.js"> </script>
+  <script src="js/controller/valueDropViewController.js"> </script>
+  <script src="js/controller/dateViewController.js"> </script>
+  <script src="js/controller/countriesViewController.js"> </script>
+  <script src="js/controller/countryVizContainerViewController.js"> </script>
+  <script src="js/controller/countryDetailViewController.js"> </script>
+
+  <!-- VIEWS -->
+  <script src="js/view/exploration.js"> </script>
+  <script src="js/view/menu.js"> </script>
+  <script src="js/view/mapView.js"> </script>
+  <script src="js/view/valueDropView.js"> </script>
+  <script src="js/view/dateView.js"> </script>
+  <script src="js/view/countriesView.js"> </script>
+  <script src="js/view/countryVizContainerView.js"> </script>
+  <script src="js/view/countryDetailView.js"> </script>
+
+  <!--ISO COUNTRY  -->
+  <script src="js/isoCountry/isoCountry.js"> </script>
+
+  <!-- APP -->
+  <script src="js/app.js"></script>
 </html>
