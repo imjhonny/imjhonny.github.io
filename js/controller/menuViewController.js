@@ -6,14 +6,7 @@ class MenuViewController{
   }
 
   addEventListener(){
-    // this.view.mapLink.on("click", ()=>{
-    //   showView('map');
-    //   this.view.selectMenu('map');
-    // });
-    // this.view.explorationLink.on("click", ()=>{
-    //   showView('exploration');
-    //   this.view.selectMenu('discover');
-    // });
+
   }
 
   renderView(){
